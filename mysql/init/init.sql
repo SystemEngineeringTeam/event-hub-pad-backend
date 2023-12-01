@@ -18,7 +18,7 @@ CREATE TABLE `event` (
 );
 CREATE TABLE `tag` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `word` varchar(10) NOT NULL,
+  `word` varchar(20) NOT NULL,
   PRIMARY KEY (`id`)
 );
 CREATE TABLE `star` (
@@ -33,6 +33,33 @@ CREATE TABLE `user` (
   `name` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
 );
+
+-- ここから追加
+CREATE TABLE `todo` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `title` varchar(255) NOT NULL,
+  `deadline` int NOT NULL,
+  PRIMARY KEY (`id`)
+);
+CREATE TABLE `event_todo_rlation` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `event_id` int NOT NULL,
+  `todo_id` int NOT NULL,
+  PRIMARY KEY (`id`)
+);
+CREATE TABLE `event_user_rlation` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `event_id` int NOT NULL,
+  `user_id` binary(16) NOT NULL,
+  PRIMARY KEY (`id`)
+);
+CREATE TABLE `tool` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(20) NOT NULL,
+  `qua` int NOT NULL,
+  PRIMARY KEY (`id`)
+);
+
 
 -- sample data
 -- Users
