@@ -23,10 +23,9 @@ exports.star_num_top = async function (num) {
 
 // event_idからeventの情報を取得できる（reqはevent_id）)
 exports.event = async function(req){
-
     try{
         console.log('event_select');
-        const results = await query("SELECT description,people FROM event WHERE id = ? ;",[req]);
+        const results = await query("SELECT description,people FROM event WHERE id IN (?) ;",[req]);
         console.log(results);
         return results;
 
@@ -39,7 +38,7 @@ exports.tag_id = async function(req){
     
         try{
             console.log('tag_id');
-            const results = await query("SELECT tag_id FROM event_tag WHERE event_id = ? ;",[req]);
+            const results = await query("SELECT tag_id FROM event_tag WHERE event_id IN ? ;",[req]);
             console.log(results);
             return results;
     
