@@ -34,11 +34,27 @@ exports.event = async function(req){
     }
 }
 
+// event_idからtag_idの情報を取得できる（reqはevent_id）)
 exports.tag_id = async function(req){
     
         try{
             console.log('tag_id');
-            const results = await query("SELECT tag_id FROM event_tag WHERE event_id IN ? ;",[req]);
+            const results = await query("SELECT tag_id FROM event_tag WHERE event_id IN (?) ;",[req]);
+            console.log(results);
+            return results;
+    
+        }catch(err){
+            throw err;
+        }
+    
+}
+
+// tag_idからtagの情報を取得できる（reqはtag_id）)
+exports.tag = async function(req){
+    
+        try{
+            console.log('tag');
+            const results = await query("SELECT word FROM tag WHERE id IN (?) ;",[req]);
             console.log(results);
             return results;
     

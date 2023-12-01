@@ -97,11 +97,26 @@ INSERT INTO `tag` (word) VALUES
 -- Event Tags
 INSERT INTO `event_tag` (event_id, tag_id) VALUES
 ((SELECT id FROM event WHERE title = 'Meeting'), 1),
-((SELECT id FROM event WHERE title = 'Party'), 2),
+((SELECT id FROM event WHERE title = 'Meeting'), 3),
+((SELECT id FROM event WHERE title = 'Party'), 5),
+((SELECT id FROM event WHERE title = 'Party'), 3),
+((SELECT id FROM event WHERE title = 'バーベーキュー'), 1),
+((SELECT id FROM event WHERE title = 'aa'), 2),
+((SELECT id FROM event WHERE title = 'fff'), 7),
 ((SELECT id FROM event WHERE title = 'Conference'), 3),
 ((SELECT id FROM event WHERE title = 'バーベーキュー'), 4),
 ((SELECT id FROM event WHERE title = 'aa'), 5),
 ((SELECT id FROM event WHERE title = 'fff'), 6),
+((SELECT id FROM event WHERE title = 'ggg'), 4),
+((SELECT id FROM event WHERE title = 'Party'), 2),
+((SELECT id FROM event WHERE title = 'Party'), 4),
+((SELECT id FROM event WHERE title = 'バーベーキュー'), 2),
+((SELECT id FROM event WHERE title = 'aa'), 3),
+((SELECT id FROM event WHERE title = 'fff'), 7),
+((SELECT id FROM event WHERE title = 'Conference'), 3),
+((SELECT id FROM event WHERE title = 'バーベーキュー'), 7),
+((SELECT id FROM event WHERE title = 'aa'), 4),
+((SELECT id FROM event WHERE title = 'fff'), 1),
 ((SELECT id FROM event WHERE title = 'ggg'), 7);
 
 -- Stars
