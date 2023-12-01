@@ -25,7 +25,6 @@ CREATE TABLE `star` (
   `id` int NOT NULL AUTO_INCREMENT,
   `user_id` binary(16) NOT NULL,
   `event_id` int NOT NULL,
-  `count` int NOT NULL,
   PRIMARY KEY (`id`)
 );
 CREATE TABLE `user` (
@@ -77,7 +76,7 @@ INSERT INTO `user` (id,name) VALUES
 -- Events
 INSERT INTO `event` (user_id, title, description, created_at, event_date, people,spend_time) VALUES
 ( (SELECT id FROM user WHERE name = 'John Doe'), 'Meeting', 'Discuss project updates', NOW(), '2023-12-01', 10,18000),
-( (SELECT id FROM user WHERE name = 'west'), 'Party', 'Party with friends', NOW(), '2023-02-01', 100,3635),
+( (SELECT id FROM user WHERE name = 'west'), 'Party', 'Party with friends', NOW(), '2023-02-01', 100,3635), 
 ( (SELECT id FROM user WHERE name = 'Alice'), 'Conference', 'Discuss project updates', NOW(), '2023-10-11', 20,20000),
 ( (SELECT id FROM user WHERE name = 'Bob'), 'バーベーキュー', 'Party with friends', NOW(), '2023-03-21', 1240,21960),
 ( (SELECT id FROM user WHERE name = 'peter'), 'aa', 'Discuss project updates', NOW(), '2023-10-09', 1041,14144),
@@ -120,13 +119,22 @@ INSERT INTO `event_tag` (event_id, tag_id) VALUES
 ((SELECT id FROM event WHERE title = 'ggg'), 7);
 
 -- Stars
-INSERT INTO `star` (user_id, event_id, count) VALUES
-( (SELECT id FROM user WHERE name = 'John Doe'), (SELECT id FROM event WHERE title = 'Meeting'), 5),
-( (SELECT id FROM user WHERE name = 'west'), (SELECT id FROM event WHERE title = 'Party'), 10),
-( (SELECT id FROM user WHERE name = 'Alice'), (SELECT id FROM event WHERE title = 'Conference'), 8),
-( (SELECT id FROM user WHERE name = 'Bob'), (SELECT id FROM event WHERE title = 'バーベーキュー'), 8),
-( (SELECT id FROM user WHERE name = 'peter'), (SELECT id FROM event WHERE title = 'aa'), 8),
-( (SELECT id FROM user WHERE name = 'Bella'), (SELECT id FROM event WHERE title = 'fff'), 8),
-( (SELECT id FROM user WHERE name = 'alex'), (SELECT id FROM event WHERE title = 'ggg'), 8);
+INSERT INTO `star` (user_id, event_id) VALUES
+( (SELECT id FROM user WHERE name = 'John Doe'), (SELECT id FROM event WHERE title = 'Meeting')),
+( (SELECT id FROM user WHERE name = 'John Doe'), (SELECT id FROM event WHERE title = 'Meeting')),
+( (SELECT id FROM user WHERE name = 'John Doe'), (SELECT id FROM event WHERE title = 'Meeting')),
+( (SELECT id FROM user WHERE name = 'John Doe'), (SELECT id FROM event WHERE title = 'Meeting')),
+( (SELECT id FROM user WHERE name = 'west'), (SELECT id FROM event WHERE title = 'Party')),
+( (SELECT id FROM user WHERE name = 'Alice'), (SELECT id FROM event WHERE title = 'Conference')),
+( (SELECT id FROM user WHERE name = 'Bob'), (SELECT id FROM event WHERE title = 'バーベーキュー')),
+( (SELECT id FROM user WHERE name = 'John Doe'), (SELECT id FROM event WHERE title = 'Meeting')),
+( (SELECT id FROM user WHERE name = 'west'), (SELECT id FROM event WHERE title = 'Party')),
+( (SELECT id FROM user WHERE name = 'Alice'), (SELECT id FROM event WHERE title = 'Conference')),
+( (SELECT id FROM user WHERE name = 'Bob'), (SELECT id FROM event WHERE title = 'バーベーキュー')),
+( (SELECT id FROM user WHERE name = 'peter'), (SELECT id FROM event WHERE title = 'aa')),
+( (SELECT id FROM user WHERE name = 'Bella'), (SELECT id FROM event WHERE title = 'fff')),
+( (SELECT id FROM user WHERE name = 'alex'), (SELECT id FROM event WHERE title = 'ggg'));
 
+-- todo
+INSERT INTO `todo`
 

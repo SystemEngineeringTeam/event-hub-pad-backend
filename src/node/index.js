@@ -19,13 +19,7 @@ app.get('/', (req, res) => {
 
 app.get('/api/evens', (req, res) => {
     let num = Number(req.query.num);//クエリパラメーターの取得num
-    console.log(num);
-    console.log(typeof(num));
-    console.log('アクセスされたよ');
-
-    make_json.top_star(num,res);
-
-
+    make_json.top_star(num, res);
 });
 
 app.listen(port,()=>{
