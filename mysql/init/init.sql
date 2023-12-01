@@ -33,11 +33,10 @@ CREATE TABLE `user` (
   PRIMARY KEY (`id`)
 );
 
--- ここから追加
 CREATE TABLE `todo` (
   `id` int NOT NULL AUTO_INCREMENT,
   `title` varchar(255) NOT NULL,
-  `deadline` int NOT NULL,
+  `deadline` date NOT NULL,
   PRIMARY KEY (`id`)
 );
 CREATE TABLE `event_todo_rlation` (
@@ -46,16 +45,22 @@ CREATE TABLE `event_todo_rlation` (
   `todo_id` int NOT NULL,
   PRIMARY KEY (`id`)
 );
-CREATE TABLE `event_user_rlation` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `event_id` int NOT NULL,
-  `user_id` binary(16) NOT NULL,
-  PRIMARY KEY (`id`)
-);
 CREATE TABLE `tool` (
   `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(20) NOT NULL,
   `qua` int NOT NULL,
+  PRIMARY KEY (`id`)
+);
+CREATE TABLE `event_tool_rlation` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `event_id` int NOT NULL,
+  `tool_id` int NOT NULL,
+  PRIMARY KEY (`id`)
+);
+CREATE TABLE `progress_todo` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `event_id` int NOT NULL,
+  `todo_id` int NOT NULL,
   PRIMARY KEY (`id`)
 );
 
@@ -135,6 +140,166 @@ INSERT INTO `star` (user_id, event_id) VALUES
 ( (SELECT id FROM user WHERE name = 'Bella'), (SELECT id FROM event WHERE title = 'fff')),
 ( (SELECT id FROM user WHERE name = 'alex'), (SELECT id FROM event WHERE title = 'ggg'));
 
--- todo
-INSERT INTO `todo`
+-- Todos
+INSERT INTO `todo` (title, deadline) VALUES
+('Buy milk', '2023-12-01'),
+('Buy eggs', '2023-12-01'),
+('Buy bread', '2023-12-01'),
+('Buy butter', '2023-12-01'),
+('Buy cheese', '2023-12-01'),
+('Buy meat', '2023-12-01'),
+('Buy fish', '2023-12-01'),
+('Buy vegetables', '2023-12-01'),
+('Buy fruit', '2023-12-01'),
+('Buy rice', '2023-12-01'),
+('Buy pasta', '2023-12-01'),
+('Buy sauce', '2023-12-01'),
+('Buy spices', '2023-12-01'),
+('Buy oil', '2023-12-01'),
+('Buy vinegar', '2023-12-01'),
+('Buy sugar', '2023-12-01'),
+('Buy salt', '2023-12-01'),
+('Buy pepper', '2023-12-01'),
+('Buy coffee', '2023-12-01'),
+('Buy tea', '2023-12-01'),
+('Buy beer', '2023-12-01'),
+('Buy wine', '2023-12-01'),
+('Buy whiskey', '2023-12-01'),
+('Buy vodka', '2023-12-01'),
+('Buy gin', '2023-12-01'),
+('Buy rum', '2023-12-01'),
+('Buy juice', '2023-12-01'),
+('Buy soda', '2023-12-01'),
+('Buy water', '2023-12-01'),
+('Buy detergent', '2023-12-01'),
+('Buy soap', '2023-12-01'),
+('Buy shampoo', '2023-12-01'),
+('Buy conditioner', '2023-12-01'),
+('Buy toothpaste', '2023-12-01'),
+('Buy toothbrush', '2023-12-01'),
+('Buy floss', '2023-12-01'),
+('Buy mouthwash', '2023-12-01'),
+('Buy toilet paper', '2023-12-01'),
+('Buy paper towels', '2023-12-01'),
+('Buy tissues', '2023-12-01');
 
+-- Event Todo Relation
+INSERT INTO `event_todo_rlation` (event_id, todo_id) VALUES
+((SELECT id FROM event WHERE title = 'Meeting'), SELECT id FROM todo WHERE title = 'Buy milk'),
+((SELECT id FROM event WHERE title = 'Meeting'), SELECT id FROM todo WHERE title = 'Buy eggs'),
+((SELECT id FROM event WHERE title = 'Meeting'), SELECT id FROM todo WHERE title = 'Buy bread'),
+((SELECT id FROM event WHERE title = 'Meeting'), SELECT id FROM todo WHERE title = 'Buy butter'),
+((SELECT id FROM event WHERE title = 'Meeting'), SELECT id FROM todo WHERE title = 'Buy cheese'),
+((SELECT id FROM event WHERE title = 'Meeting'), SELECT id FROM todo WHERE title = 'Buy meat'),
+((SELECT id FROM event WHERE title = 'Meeting'), SELECT id FROM todo WHERE title = 'Buy fish'),
+((SELECT id FROM event WHERE title = 'Meeting'), SELECT id FROM todo WHERE title = 'Buy vegetables'),
+((SELECT id FROM event WHERE title = 'Meeting'), SELECT id FROM todo WHERE title = 'Buy fruit'),
+((SELECT id FROM event WHERE title = 'Conference'), SELECT id FROM todo WHERE title = 'Buy rice'),
+((SELECT id FROM event WHERE title = 'Meeting'), SELECT id FROM todo WHERE title = 'Buy pasta'),
+((SELECT id FROM event WHERE title = 'Meeting'), SELECT id FROM todo WHERE title = 'Buy sauce'),
+((SELECT id FROM event WHERE title = 'Meeting'), SELECT id FROM todo WHERE title = 'Buy spices'),
+((SELECT id FROM event WHERE title = 'Meeting'), SELECT id FROM todo WHERE title = 'Buy oil'),
+((SELECT id FROM event WHERE title = 'Party'), SELECT id FROM todo WHERE title = 'Buy vinegar'),
+((SELECT id FROM event WHERE title = 'aa'), SELECT id FROM todo WHERE title = 'Buy sugar'),
+((SELECT id FROM event WHERE title = 'Meeting'), SELECT id FROM todo WHERE title = 'Buy salt'),
+((SELECT id FROM event WHERE title = 'Meeting'), SELECT id FROM todo WHERE title = 'Buy pepper'),
+((SELECT id FROM event WHERE title = 'Meeting'), SELECT id FROM todo WHERE title = 'Buy coffee'),
+((SELECT id FROM event WHERE title = 'Meeting'), SELECT id FROM todo WHERE title = 'Buy tea'),
+((SELECT id FROM event WHERE title = 'Meeting'), SELECT id FROM todo WHERE title = 'Buy beer'),
+((SELECT id FROM event WHERE title = 'Conference'), SELECT id FROM todo WHERE title = 'Buy wine'),
+((SELECT id FROM event WHERE title = 'Meeting'), SELECT id FROM todo WHERE title = 'Buy whiskey'),
+((SELECT id FROM event WHERE title = 'Meeting'), SELECT id FROM todo WHERE title = 'Buy vodka'),
+((SELECT id FROM event WHERE title = 'Meeting'), SELECT id FROM todo WHERE title = 'Buy gin'),
+((SELECT id FROM event WHERE title = 'Meeting'), SELECT id FROM todo WHERE title = 'Buy rum'),
+((SELECT id FROM event WHERE title = 'Meeting'), SELECT id FROM todo WHERE title = 'Buy juice'),
+((SELECT id FROM event WHERE title = 'Meeting'), SELECT id FROM todo WHERE title = 'Buy soda'),
+((SELECT id FROM event WHERE title = 'Meeting'), SELECT id FROM todo WHERE title = 'Buy water'),
+((SELECT id FROM event WHERE title = 'Meeting'), SELECT id FROM todo WHERE title = 'Buy detergent'),
+((SELECT id FROM event WHERE title = 'Meeting'), SELECT id FROM todo WHERE title = 'Buy soap'),
+((SELECT id FROM event WHERE title = 'Meeting'), SELECT id FROM todo WHERE title = 'Buy shampoo'),
+((SELECT id FROM event WHERE title = 'バーベーキュー'), SELECT id FROM todo WHERE title = 'Buy conditioner'),
+((SELECT id FROM event WHERE title = 'Meeting'), SELECT id FROM todo WHERE title = 'Buy toothpaste'),
+((SELECT id FROM event WHERE title = 'Meeting'), SELECT id FROM todo WHERE title = 'Buy toothbrush'),
+((SELECT id FROM event WHERE title = 'Meeting'), SELECT id FROM todo WHERE title = 'Buy floss'),
+((SELECT id FROM event WHERE title = 'Meeting'), SELECT id FROM todo WHERE title = 'Buy mouthwash'),
+((SELECT id FROM event WHERE title = 'Meeting'), SELECT id FROM todo WHERE title = 'Buy toilet paper'),
+((SELECT id FROM event WHERE title = 'Meeting'), SELECT id FROM todo WHERE title = 'Buy paper towels'),
+((SELECT id FROM event WHERE title = 'Meeting'), SELECT id FROM todo WHERE title = 'Buy tissues'),
+((SELECT id FROM event WHERE title = 'Party'), SELECT id FROM todo WHERE title = 'Buy milk'),
+((SELECT id FROM event WHERE title = 'Party'), SELECT id FROM todo WHERE title = 'Buy eggs'),
+((SELECT id FROM event WHERE title = 'Party'), SELECT id FROM todo WHERE title = 'Buy bread'),
+((SELECT id FROM event WHERE title = 'Party'), SELECT id FROM todo WHERE title = 'Buy butter'),
+((SELECT id FROM event WHERE title = 'Party'), SELECT id FROM todo WHERE title = 'Buy cheese'),
+((SELECT id FROM event WHERE title = 'Party'), SELECT id FROM todo WHERE title = 'Buy soap');
+
+-- Tools
+INSERT INTO `tool` (name, qua) VALUES
+('ハンマー', 12),
+('ドライバー', 4),
+('ペンチ', 5),
+('ノコギリ', 8),
+('ヤスリ', 1),
+('ハンドソー',4),
+('ノギス', 1),
+('メジャー', 1),
+('コンパス', 1),
+('ボールペン', 3),
+('シャープペンシル', 1),
+('鉛筆', 1),
+('消しゴム', 3),
+('定規', 1),
+('三角定規', 1),
+('コンパス', 2),
+('ノート', 1),
+
+-- Event Tool Relation
+INSERT INTO `event_tool_rlation` (event_id, tool_id) VALUES
+((SELECT id FROM event WHERE title = 'Meeting'), SELECT id FROM todo WHERE title = 'Buy milk'),
+((SELECT id FROM event WHERE title = 'Meeting'), SELECT id FROM todo WHERE title = 'Buy eggs'),
+((SELECT id FROM event WHERE title = 'Meeting'), SELECT id FROM todo WHERE title = 'Buy bread'),
+((SELECT id FROM event WHERE title = 'Meeting'), SELECT id FROM todo WHERE title = 'Buy butter'),
+((SELECT id FROM event WHERE title = 'Meeting'), SELECT id FROM todo WHERE title = 'Buy cheese'),
+((SELECT id FROM event WHERE title = 'Meeting'), SELECT id FROM todo WHERE title = 'Buy meat'),
+((SELECT id FROM event WHERE title = 'Meeting'), SELECT id FROM todo WHERE title = 'Buy fish'),
+((SELECT id FROM event WHERE title = 'Meeting'), SELECT id FROM todo WHERE title = 'Buy vegetables'),
+((SELECT id FROM event WHERE title = 'Meeting'), SELECT id FROM todo WHERE title = 'Buy fruit'),
+((SELECT id FROM event WHERE title = 'Conference'), SELECT id FROM todo WHERE title = 'Buy rice'),
+((SELECT id FROM event WHERE title = 'Meeting'), SELECT id FROM todo WHERE title = 'Buy pasta'),
+((SELECT id FROM event WHERE title = 'Meeting'), SELECT id FROM todo WHERE title = 'Buy sauce'),
+((SELECT id FROM event WHERE title = 'Meeting'), SELECT id FROM todo WHERE title = 'Buy spices'),
+((SELECT id FROM event WHERE title = 'Meeting'), SELECT id FROM todo WHERE title = 'Buy oil'),
+((SELECT id FROM event WHERE title = 'Party'), SELECT id FROM todo WHERE title = 'Buy vinegar'),
+((SELECT id FROM event WHERE title = 'aa'), SELECT id FROM todo WHERE title = 'Buy sugar'),
+((SELECT id FROM event WHERE title = 'Meeting'), SELECT id FROM todo WHERE title = 'Buy salt'),
+((SELECT id FROM event WHERE title = 'Meeting'), SELECT id FROM todo WHERE title = 'Buy pepper'),
+((SELECT id FROM event WHERE title = 'Meeting'), SELECT id FROM todo WHERE title = 'Buy coffee'),
+((SELECT id FROM event WHERE title = 'Meeting'), SELECT id FROM todo WHERE title = 'Buy tea'),
+((SELECT id FROM event WHERE title = 'Meeting'), SELECT id FROM todo WHERE title = 'Buy beer'),
+((SELECT id FROM event WHERE title = 'Conference'), SELECT id FROM todo WHERE title = 'Buy wine'),
+((SELECT id FROM event WHERE title = 'Meeting'), SELECT id FROM todo
+
+-- Progress Todo
+INSERT INTO `progress_todo` (event_id, todo_id) VALUES
+((SELECT id FROM event WHERE title = 'Meeting'), SELECT id FROM todo WHERE title = 'Buy milk'),
+((SELECT id FROM event WHERE title = 'Meeting'), SELECT id FROM todo WHERE title = 'Buy eggs'),
+((SELECT id FROM event WHERE title = 'Meeting'), SELECT id FROM todo WHERE title = 'Buy bread'),
+((SELECT id FROM event WHERE title = 'Meeting'), SELECT id FROM todo WHERE title = 'Buy butter'),
+((SELECT id FROM event WHERE title = 'Meeting'), SELECT id FROM todo WHERE title = 'Buy cheese'),
+((SELECT id FROM event WHERE title = 'Meeting'), SELECT id FROM todo WHERE title = 'Buy meat'),
+((SELECT id FROM event WHERE title = 'Meeting'), SELECT id FROM todo WHERE title = 'Buy fish'),
+((SELECT id FROM event WHERE title = 'Meeting'), SELECT id FROM todo WHERE title = 'Buy vegetables'),
+((SELECT id FROM event WHERE title = 'Meeting'), SELECT id FROM todo WHERE title = 'Buy fruit'),
+((SELECT id FROM event WHERE title = 'Conference'), SELECT id FROM todo WHERE title = 'Buy rice'),
+((SELECT id FROM event WHERE title = 'Meeting'), SELECT id FROM todo WHERE title = 'Buy pasta'),
+((SELECT id FROM event WHERE title = 'Meeting'), SELECT id FROM todo WHERE title = 'Buy sauce'),
+((SELECT id FROM event WHERE title = 'Meeting'), SELECT id FROM todo WHERE title = 'Buy spices'),
+((SELECT id FROM event WHERE title = 'Meeting'), SELECT id FROM todo WHERE title = 'Buy oil'),
+((SELECT id FROM event WHERE title = 'Party'), SELECT id FROM todo WHERE title = 'Buy vinegar'),
+((SELECT id FROM event WHERE title = 'aa'), SELECT id FROM todo WHERE title = 'Buy sugar'),
+((SELECT id FROM event WHERE title = 'Meeting'), SELECT id FROM todo WHERE title = 'Buy salt'),
+((SELECT id FROM event WHERE title = 'Meeting'), SELECT id FROM todo WHERE title = 'Buy pepper'),
+((SELECT id FROM event WHERE title = 'Meeting'), SELECT id FROM todo WHERE title = 'Buy coffee'),
+((SELECT id FROM event WHERE title = 'Meeting'), SELECT id FROM todo WHERE title = 'Buy tea'),
+((SELECT id FROM event WHERE title = 'Meeting'), SELECT id FROM todo WHERE title = 'Buy beer'),
+((SELECT id FROM event WHERE title = 'Conference'), SELECT id FROM todo WHERE title = 'Buy wine'),
+((SELECT id FROM event WHERE title = 'Meeting'), SELECT id FROM todo
