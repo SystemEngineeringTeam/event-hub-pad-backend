@@ -1,5 +1,6 @@
 const mysql = require('mysql');
 const dotenv = require('dotenv');
+const util = require('util');
 
 dotenv.config();
 const pool = mysql.createPool({
@@ -9,5 +10,7 @@ const pool = mysql.createPool({
   password: process.env.DB_PASSWORD,
   database: process.env.DB_NAME,
 });
+
+
 
 module.exports = pool;
