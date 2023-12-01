@@ -19,7 +19,13 @@ app.get('/', (req, res) => {
 
 app.get('/api/evens', (req, res) => {
     let num = Number(req.query.num);//クエリパラメーターの取得num
-    make_json.top_star(num, res);
+    make_json.top_event(num, res);
+
+});
+app.get('/api/evens/:eventid', (req, res) => {
+    let event_id = Number(req.params.eventid);
+    console.log(event_id);
+    make_json.event_detail( event_id, res);
 });
 
 app.listen(port,()=>{
