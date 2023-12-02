@@ -18,52 +18,35 @@ exports.top_event = async function (num, res) {
   }
   );
 
-
-  // let event_id = [];
-  // for (let i = 0; i < event.length; i++) {
-  //   event_id.push(event[i].event_id);
-  // }
-  // let other_events = await select.other_events(event_id);
-
-  //   event.forEach((element) => {
-  //   element.tags = JSON.parse(element.tags);
-  //   });
-  // other_events.forEach((element) => {
-  //   element.tags = JSON.parse(element.tags);
-  // }
-  //   );
+  let top_event = [];
+  let other_events = [];
+  let i = 0;
+ 
+  event.forEach((element) => {
+    if (i < num) {
+      top_event.push(element);
+    } else {
+      other_events.push(element);
+    }
+    i++;
+  });
 
 
-  // let event_json = [];
-  // event_json.push(event);
-  // event_json.push(other_events);
 
-  console.log(event);
 
-  res.json(event);
+
+  let event_json = {top_event, other_events};
+
+  console.log(event_json);
+
+  res.json(event_json);
 };
 
 // イベントの詳細を取得できる
 exports.event_detail = async function (eventid, res) {
   let event_detail = await select.event_detail(eventid);
 
-  //     function formatDateToYYYYMMDD(date) {
-  //         const year = date.getFullYear();
-  //         const month = String(date.getMonth() + 1).padStart(2, '0');
-  //         const day = String(date.getDate()).padStart(2, '0');
-  //         return `${year}-${month}-${day}`;
-  //       }
-
-  //       // 使用例
-  //     function formatDate (date) {
-  //       const nodejsDate = new Date(date); // 任意の日付を指定する場合は引数に対象のDateオブジェクトを渡します
-  //       const formattedDate = formatDateToYYYYMMDD(nodejsDate);
-
-  //       console.log(formattedDate);
-  //       return formattedDate;
-  //     }
-
-  //    event_detail[0].created_at= formatDate(event_detail[0].created_at);
+t= formatDate(event_detail[0].created_at);
   // event_detail[0].event_date= formatDate(event_detail[0].event_date);
 
   console.log(event_detail[0].todos);
