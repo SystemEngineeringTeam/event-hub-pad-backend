@@ -96,6 +96,66 @@ exports.event_detail = async function (eventid) {
         }
     }
 
+exports.todo_list = async function (userid) {
+        
+            try {
+                const results = await query(`
+                SELECT
+                progress_event.event_id,
+                event.title,
+                JSON_ARRAYAGG(JSON_OBJECT('id', todo.id, 'title', todo.title)) AS todos
+            FROM progress_event
+            INNER JOIN 
+                progress_todo ON progress_event.id = progress_todo.progress_event_id
+            INNER JOIN 
+                event ON progress_event.event_id = event.id
+            INNER JOIN
+                todo ON progress_todo.todo_id = todo.id
+            WHERE 
+                progress_event.user_id = UUID_TO_BIN(?)
+            GROUP BY
+                progress_event.event_id, event.title;
+        `, [userid]);
+
+            console.log('todo_list');
+            console.log(results);
+        
+                return results;
+            } catch (err) {
+                throw err;
+            }
+        }
+
+exports.individual_todo_list = async function (userid) {
+            
+                try {
+                    const results = await query(`
+                    SELECT
+                    progress_event.event_id,
+                    event.title,
+                    JSON_ARRAYAGG(JSON_OBJECT('id', todo.id, 'title', todo.title)) AS todos
+                FROM progress_event
+                INNER JOIN 
+                    progress_todo ON progress_event.id = progress_todo.progress_event_id
+                INNER JOIN 
+                    event ON progress_event.event_id = event.id
+                INNER JOIN
+                    todo ON progress_todo.todo_id = todo.id
+                WHERE 
+                    progress_event.user_id = UUID_TO_BIN(?)
+                GROUP BY
+                    progress_event.event_id, event.title;
+            `, [userid]);
+    
+                console.log('todo_list');
+                console.log(results);
+            
+                    return results;
+                } catch (err) {
+                    throw err;
+                }
+            }
+
 
 // event_idからeventの情報を取得できる（reqはevent_id）)
 // exports.event = async function (req) {

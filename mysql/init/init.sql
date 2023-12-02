@@ -59,10 +59,17 @@ CREATE TABLE `event_tool_relation` (
   `tool_id` int NOT NULL,
   PRIMARY KEY (`id`)
 );
+CREATE TABLE `progress_event` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `user_id` binary(16) NOT NULL,
+  `event_id` int NOT NULL,
+  PRIMARY KEY (`id`)
+);
 CREATE TABLE `progress_todo` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `event_id` int NOT NULL,
+  `progress_event_id` int NOT NULL,
   `todo_id` int NOT NULL,
+  `bool` boolean NOT NULL,
   PRIMARY KEY (`id`)
 );
 
@@ -73,16 +80,16 @@ CREATE TABLE `progress_todo` (
 
 -- Insert test data for 'user' table
 INSERT INTO `user` (`id`, `name`) VALUES
-  (UNHEX(REPLACE(UUID(), '-', '')), 'Alice'),
-  (UNHEX(REPLACE(UUID(), '-', '')), 'Bob'),
-  (UNHEX(REPLACE(UUID(), '-', '')), 'Charlie'),
-  (UNHEX(REPLACE(UUID(), '-', '')), 'David'),
-  (UNHEX(REPLACE(UUID(), '-', '')), 'Eve'),
-  (UNHEX(REPLACE(UUID(), '-', '')), 'Frank'),
-  (UNHEX(REPLACE(UUID(), '-', '')), 'Grace'),
-  (UNHEX(REPLACE(UUID(), '-', '')), 'Henry'),
-  (UNHEX(REPLACE(UUID(), '-', '')), 'Ivy'),
-  (UNHEX(REPLACE(UUID(), '-', '')), 'Jack');
+  (UNHEX(REPLACE('245207C0-90FF-11EE-96BD-95E35D93FC62', '-', '')), 'Alice'),
+  (UNHEX(REPLACE('24522ED0-90FF-11EE-96BD-95E35D93FC62', '-', '')), 'Bob'),
+  (UNHEX(REPLACE('24522ED1-90FF-11EE-96BD-95E35D93FC62', '-', '')), 'Charlie'),
+  (UNHEX(REPLACE('24522ED2-90FF-11EE-96BD-95E35D93FC62', '-', '')), 'David'),
+  (UNHEX(REPLACE('24522ED3-90FF-11EE-96BD-95E35D93FC62', '-', '')), 'Eve'),
+  (UNHEX(REPLACE('24522ED4-90FF-11EE-96BD-95E35D93FC62', '-', '')), 'Frank'),
+  (UNHEX(REPLACE('24522ED5-90FF-11EE-96BD-95E35D93FC62', '-', '')), 'Grace'),
+  (UNHEX(REPLACE('24522ED6-90FF-11EE-96BD-95E35D93FC62', '-', '')), 'Henry'),
+  (UNHEX(REPLACE('24522ED7-90FF-11EE-96BD-95E35D93FC62', '-', '')), 'Ivy'),
+  (UNHEX(REPLACE('24522ED8-90FF-11EE-96BD-95E35D93FC62', '-', '')), 'Jack');
 
 -- Insert test data for 'tag' table
 INSERT INTO `tag` (`word`) VALUES
@@ -156,7 +163,41 @@ INSERT INTO `event_tool_relation` (`event_id`, `tool_id`) VALUES
   (1, 1), (2, 2), (3, 3), (4, 4), (5, 5),
   (6, 6), (7, 7), (8, 8), (9, 9), (10, 10);
 
+-- Insert test data for 'progress_event' table
+INSERT INTO `progress_event` (`user_id`, `event_id`) VALUES
+  ((SELECT id FROM user WHERE name = 'Alice'), (SELECT id FROM event WHERE title = 'Event1')),
+   ((SELECT id FROM user WHERE name = 'Alice'), (SELECT id FROM event WHERE title = 'Event2')),
+  ((SELECT id FROM user WHERE name = 'Bob'), (SELECT id FROM event WHERE title = 'Event3')),
+  ((SELECT id FROM user WHERE name = 'Charlie'), (SELECT id FROM event WHERE title = 'Event4')),
+  ((SELECT id FROM user WHERE name = 'David'), (SELECT id FROM event WHERE title = 'Event5')),
+  ((SELECT id FROM user WHERE name = 'Eve'), (SELECT id FROM event WHERE title = 'Event6')),
+  ((SELECT id FROM user WHERE name = 'Frank'), (SELECT id FROM event WHERE title = 'Event7')),
+  ((SELECT id FROM user WHERE name = 'Grace'), (SELECT id FROM event WHERE title = 'Event8')),
+  ((SELECT id FROM user WHERE name = 'Henry'), (SELECT id FROM event WHERE title = 'Event9')),
+  ((SELECT id FROM user WHERE name = 'Ivy'), (SELECT id FROM event WHERE title = 'Event10')),
+  ((SELECT id FROM user WHERE name = 'Alice'), (SELECT id FROM event WHERE title = 'Event1')),
+  ((SELECT id FROM user WHERE name = 'Bob'), (SELECT id FROM event WHERE title = 'Event2')),
+  ((SELECT id FROM user WHERE name = 'Charlie'), (SELECT id FROM event WHERE title = 'Event3')),
+  ((SELECT id FROM user WHERE name = 'David'), (SELECT id FROM event WHERE title = 'Event4')),
+  ((SELECT id FROM user WHERE name = 'Eve'), (SELECT id FROM event WHERE title = 'Event5')),
+  ((SELECT id FROM user WHERE name = 'Frank'), (SELECT id FROM event WHERE title = 'Event6')),
+  ((SELECT id FROM user WHERE name = 'Grace'), (SELECT id FROM event WHERE title = 'Event7')),
+  ((SELECT id FROM user WHERE name = 'Henry'), (SELECT id FROM event WHERE title = 'Event8')),
+  ((SELECT id FROM user WHERE name = 'Ivy'), (SELECT id FROM event WHERE title = 'Event9')),
+  ((SELECT id FROM user WHERE name = 'Jack'), (SELECT id FROM event WHERE title = 'Event10'));
+
 -- Insert test data for 'progress_todo' table
-INSERT INTO `progress_todo` (`event_id`, `todo_id`) VALUES
-  (1, 1), (2, 2), (3, 3), (4, 4), (5, 5),
-  (6, 6), (7, 7), (8, 8), (9, 9), (10, 10);
+INSERT INTO `progress_todo` (`progress_event_id`, `todo_id`, `bool`) VALUES
+(1, 3, 0),
+
+(2,3,0),
+(1,5,1),
+(3,1,1),
+(4,2,0),
+(5,4,1),
+(6,6,0),
+(7,7,1),
+(8,8,0),
+(9,9,1),
+(10,10,0),
+(3,7,1);

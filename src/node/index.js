@@ -3,9 +3,11 @@ const app = express();
 const port = 8000;
 const cors = require('cors');
 const make_json = require('./select_db/make_json');
+const post = require('./post/body_data');
 const bodyParser = require('body-parser');
 
 app.use(cors());
+
 app.use(express.json());
 
 
@@ -26,6 +28,37 @@ app.get('/api/evens/:eventid', (req, res) => {
     let event_id = Number(req.params.eventid);
     console.log(event_id);
     make_json.event_detail( event_id, res);
+});
+
+app.get('/api/:userid/todos/all', (req, res) => {
+    let user_id = req.params.userid;
+    console.log(user_id);
+    make_json.todo_list(user_id, res);
+});
+
+app.get('api/:userid/todos', (req, res) => {
+    let user_id = req.params.userid;
+    console.log(user_id);
+    make_json.todo_list(user_id, res);
+});
+
+app.post('/api/:userid/events', (req, res) => {
+    let user_id = req.params.userid;
+
+    console.log(user_id);
+
+    post.event_registration(req,user_id,res);
+
+});
+
+app.post('/api/:userid/star/:eventid', (req, res) => {
+    let user_id = req.params.userid;
+    let event_id = req.params.eventid;
+    console.log(user_id);
+    console.log(event_id);
+
+    post.star_registration(req,user_id,event_id,res);
+
 });
 
 app.listen(port,()=>{

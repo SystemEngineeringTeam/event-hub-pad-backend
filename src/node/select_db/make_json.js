@@ -48,3 +48,15 @@ event_detail[0].event_date= formatDate(event_detail[0].event_date);
     console.log(event_detail);
     res.json(event_detail);
 }
+
+exports.todo_list = async function (userid, res) {
+    let todo_list = await select.todo_list(userid);
+    console.log(todo_list);
+    res.json(todo_list);
+}
+
+exports.individual_todo_list = async function (userid, res) {
+    let individual_todo_list = await select.individual_todo_list(userid);
+    console.log(individual_todo_list);
+    res.json(individual_todo_list);
+}
