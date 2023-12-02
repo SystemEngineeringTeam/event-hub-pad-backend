@@ -1,75 +1,100 @@
-const db = require('../config/mysql.config');
-const util = require('util');
+const db = require("../config/mysql.config");
+const util = require("util");
 
 const query = util.promisify(db.query).bind(db); // bind(db) を追加
 
 // event_idからeventの情報を取得できる（reqはevent_id）)
 exports.star_num_top = async function (num) {
-
-    try {
-        console.log('test');
-        const results = await query(`
+  try {
+    const results = await query(
+    `
     SELECT
-        star.event_id,
-        event.description,
-        event.people,
-        event.spend_time,
-        COUNT(star.event_id) AS count,
-        concat('[', group_concat(distinct event_tag.tag_id),']') AS tag_ids,
-        concat('[', group_concat(distinct tag.word),']') AS words
-    FROM event
-    INNER JOIN star ON star.event_id = event.id
-    INNER JOIN event_tag ON star.event_id = event_tag.event_id
-    INNER JOIN tag ON event_tag.tag_id = tag.id
-    GROUP BY star.event_id, event.description, event.people, event.spend_time
-    ORDER BY COUNT(star.event_id) DESC
-    LIMIT ?;
-`, [num]);
+    event.id,
+    event.description,
+    event.price,
+    event.people,
+    event.spend_time,
+    IFNULL (tmp_star.count, 0) AS star,
+    tmp_tag.tags
+FROM
+    event
+    LEFT JOIN (
+        SELECT
+            event_id,
+            COUNT(*) AS count
+        FROM
+            star
+        GROUP BY
+            event_id
+    ) AS tmp_star ON event.id = tmp_star.event_id
+    LEFT JOIN (
+        SELECT
+            et.event_id AS event_id,
+            JSON_ARRAYAGG(
+                JSON_OBJECT('id', t.id, 'word', t.word)
+            ) AS tags
+        FROM
+            event_tag et
+        INNER JOIN tag t ON et.tag_id = t.id
+        GROUP BY et.event_id
+    ) AS tmp_tag ON event.id = tmp_tag.event_id
+    ORDER BY star DESC;
 
-        return results;
-    } catch (err) {
-        throw err;
-    }
+    `,
+      // Specify the LIMIT value here
+      [num]
+    );
+
+    return results;
+  } catch (err) {
+    throw err;
+  }
 };
 
 exports.other_events = async function (event) {
-    
-        try {
-            // await query(` DELETE FROM event
-            // WHERE event.id IN (SELECT star.event_id FROM star WHERE star.event_id = event.id);`);
-            const results = await query(`
+  try {
+    // await query(` DELETE FROM event
+    // WHERE event.id IN (SELECT star.event_id FROM star WHERE star.event_id = event.id);`);
+    const results = await query(
+      `
            
             
             SELECT
                 star.event_id,
+                event.title,
+                event.price,
                 event.description,
                 event.people,
                 event.spend_time,
-                COUNT(star.event_id) AS count,
-                CONCAT('[', GROUP_CONCAT(DISTINCT event_tag.tag_id), ']') AS tag_ids,
-                CONCAT('[', GROUP_CONCAT(DISTINCT tag.word), ']') AS words
+                event.event_date,
+                COUNT(star.event_id) AS star,
+                JSON_ARRAYAGG(JSON_OBJECT('id', tag.id, 'word', tag.word)) AS tags
             FROM event
             INNER JOIN star ON star.event_id = event.id
-            INNER JOIN event_tag ON star.event_id = event_tag.event_id
+            INNER JOIN event_tag ON event_tag.event_id = event.id
             INNER JOIN tag ON event_tag.tag_id = tag.id
             WHERE event.id NOT IN (?)
             GROUP BY star.event_id, event.description, event.people, event.spend_time
             ORDER BY event.id DESC;
-    `, [event]);
-    
-            return results;
-        } catch (err) {
-            throw err;
-        }
-}
+    `,
+      [event]
+    );
+
+    return results;
+  } catch (err) {
+    throw err;
+  }
+};
 
 exports.event_detail = async function (eventid) {
-    
-        try {
-            const results = await query(`
+  try {
+    const results = await query(
+      `
             SELECT
             event.title,
             event.description,
+            event.price,
+            event.,
             event.people,
             event.spend_time,
             event.created_at,
@@ -88,18 +113,20 @@ exports.event_detail = async function (eventid) {
             tool ON event_tool_relation.tool_id = tool.id
           WHERE
             event.id = ?;
-    `, [eventid]);
-    
-            return results;
-        } catch (err) {
-            throw err;
-        }
-    }
+    `,
+      [eventid]
+    );
+
+    return results;
+  } catch (err) {
+    throw err;
+  }
+};
 
 exports.todo_list = async function (userid) {
-        
-            try {
-                const results = await query(`
+  try {
+    const results = await query(
+      `
                 SELECT
                 progress_event.event_id,
                 event.title,
@@ -115,47 +142,47 @@ exports.todo_list = async function (userid) {
                 progress_event.user_id = UUID_TO_BIN(?)
             GROUP BY
                 progress_event.event_id, event.title;
-        `, [userid]);
+        `,
+      [userid]
+    );
 
-            console.log('todo_list');
-            console.log(results);
-        
-                return results;
-            } catch (err) {
-                throw err;
-            }
-        }
+    console.log("todo_list");
+    console.log(results);
 
-exports.individual_todo_list = async function (userid) {
-            
-                try {
-                    const results = await query(`
-                    SELECT
-                    progress_event.event_id,
-                    event.title,
-                    JSON_ARRAYAGG(JSON_OBJECT('id', todo.id, 'title', todo.title)) AS todos
-                FROM progress_event
-                INNER JOIN 
-                    progress_todo ON progress_event.id = progress_todo.progress_event_id
-                INNER JOIN 
-                    event ON progress_event.event_id = event.id
-                INNER JOIN
-                    todo ON progress_todo.todo_id = todo.id
-                WHERE 
-                    progress_event.user_id = UUID_TO_BIN(?)
-                GROUP BY
-                    progress_event.event_id, event.title;
-            `, [userid]);
-    
-                console.log('todo_list');
-                console.log(results);
-            
-                    return results;
-                } catch (err) {
-                    throw err;
-                }
-            }
+    return results;
+  } catch (err) {
+    throw err;
+  }
+};
 
+exports.individual_todo_list = async function (userid, num) {
+  try {
+    const results = await query(
+      `
+      SELECT
+      event.id,
+        event.title,
+       todo.title
+    FROM event
+    INNER JOIN progress_event ON progress_event.id = event.id
+    INNER JOIN progress_todo ON progress_event.id = progress_todo.progress_event_id
+    INNER JOIN todo ON progress_todo.todo_id = todo.id
+    WHERE progress_event.user_id = UUID_TO_BIN(?)
+    ORDER BY todo.deadline DESC
+    LIMIT ?;
+            `,
+      [userid, num]
+    );
+
+    console.log("individual_todo_list");
+    console.log(results);
+
+    return results;
+  } catch (err) {
+    // { "error" : ${err} }
+    return err;
+  }
+};
 
 // event_idからeventの情報を取得できる（reqはevent_id）)
 // exports.event = async function (req) {

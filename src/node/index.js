@@ -36,10 +36,12 @@ app.get('/api/:userid/todos/all', (req, res) => {
     make_json.todo_list(user_id, res);
 });
 
-app.get('api/:userid/todos', (req, res) => {
+app.get('/api/:userid/todos', (req, res) => {
     let user_id = req.params.userid;
+    let num = Number(req.query.num);
     console.log(user_id);
-    make_json.todo_list(user_id, res);
+    console.log(num);
+    make_json.individual_todo_list(user_id,num, res);
 });
 
 app.post('/api/:userid/events', (req, res) => {
