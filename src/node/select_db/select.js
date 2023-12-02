@@ -74,22 +74,21 @@ exports.event_detail = async function (eventid) {
             event.spend_time,
             event.created_at,
             event.event_date,
-            JSON_ARRAYAGG(JSON_OBJECT('id', todo.id, 'description', todo.description)) AS todos,
-            JSON_ARRAYAGG(JSON_OBJECT('name', tool.name, 'amount', tool.que)) AS tools
+            JSON_ARRAYAGG(JSON_OBJECT('id', todo.id, 'title', todo.title)) AS todos,
+            JSON_ARRAYAGG(JSON_OBJECT('name', tool.name, 'amount', tool.qua)) AS tools
           FROM
             event
           INNER JOIN
-            event_todo_rlation ON event.id = event_todo_rlation.event_id
+            event_todo_relation ON event.id = event_todo_relation.event_id
           INNER JOIN
-            todo ON event_todo_rlation.todo_id = todo.id
+            todo ON event_todo_relation.todo_id = todo.id
           INNER JOIN
-            event_tool_rlation ON event.id = event_tool_rlation.event_id
+            event_tool_relation ON event.id = event_tool_relation.event_id
           INNER JOIN
-            tool ON event_tool_rlation.tool_id = tool.id
+            tool ON event_tool_relation.tool_id = tool.id
           WHERE
             event.id = ?;
     `, [eventid]);
-            console.log(results);
     
             return results;
         } catch (err) {

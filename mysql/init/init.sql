@@ -1,3 +1,5 @@
+CREATE DATABASE IF NOT EXISTS eventhub_db;
+
 use  eventhub_db;
 CREATE TABLE `event` (
   `id` int NOT NULL AUTO_INCREMENT,
