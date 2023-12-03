@@ -62,13 +62,13 @@ t= formatDate(event_detail[0].created_at);
 };
 
 exports.todo_list = async function (userid, res) {
-  let todo_list = await select.todo_list(userid);
+  let todoAll = await select.todoAll(userid);
 
-  todo_list.forEach((element) => {
+  todoAll.forEach((element) => {
     element.todos = JSON.parse(element.todos);
   });
 
-  let todoall = { todo_list };
+  let todoall = { todoAll };
   console.log(todoall);
   res.json(todoall);
 };
