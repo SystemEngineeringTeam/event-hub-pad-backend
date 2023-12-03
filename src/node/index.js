@@ -63,6 +63,14 @@ app.post('/api/:userid/star/:eventid', (req, res) => {
 
 });
 
+app.delete('/api/:userid/star/:eventid', (req, res) => {
+    let user_id = req.params.userid;
+    console.log(user_id);
+    let event_id = req.params.eventid; 
+    post.star_erase(req,user_id,event_id,res);
+
+});
+
 app.listen(port,()=>{
     console.log(`繋がったよhttp://localhost:${port}`)
 }

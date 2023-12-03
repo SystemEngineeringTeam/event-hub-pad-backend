@@ -16,8 +16,8 @@ services:
       MYSQL_USER: set
       MYSQL_PASSWORD: password
       TZ: "Asia/Tokyo"
-    # networks:
-      # - eventhub_network
+    networks:
+      - eventhub_network
 
 
   api:
@@ -26,13 +26,13 @@ services:
     # volumes:
     #   - ./src/node:/app
     ports:
-      - "3000:3000"
+      - "3000:8000"
     depends_on:
       - mysql
     tty: true
-    # networks:
-    #   - eventhub_network
+    networks:
+      - eventhub_network
 
-# networks:
-#   eventhub_network:
-#     driver: bridge
+networks:
+  eventhub_network:
+    driver: bridge

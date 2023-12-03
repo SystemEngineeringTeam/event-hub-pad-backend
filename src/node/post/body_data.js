@@ -26,3 +26,12 @@ exports.star_registration = async function (req,userid,eventid,res) {
 
     res.json(star_post);
 }
+
+exports.star_erase = async function (userid,event_id,res) {
+    let user_id = userid;
+    console.log(user_id);
+
+    let erase = insert.erase_star(user_id,event_id);
+
+    res.json(erase);
+}

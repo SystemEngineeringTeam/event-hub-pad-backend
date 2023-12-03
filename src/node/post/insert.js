@@ -107,5 +107,21 @@ exports.star_registration = async function (userid,eventid) {
     } catch (err) {
         throw err;
     }
+}
 
+exports.erase_star = async function (userid,event_id) {
+    let user_id = userid;
+    console.log(user_id);
+
+    try {
+
+        const results = await query(`
+        DELETE FROM star
+        WHERE (user_id = UUID_TO_BIN(?),event_id = ?);`, [user_id,event_id]);
+
+        return results;
+
+    } catch (err) {
+        throw err;
+    }
 }
