@@ -213,7 +213,7 @@ INSERT INTO `event_todo_relation` (`event_id`, `todo_id`) VALUES
   (4, 12),
   (4, 13),
   (4, 14),
-  (4, 15),
+  (4, 1),
   (5,4),
   (5,5),
   (5,6),

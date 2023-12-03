@@ -162,7 +162,7 @@ exports.individual_todo_list = async function (userid, num) {
       SELECT
       event.id AS id,
       event.title AS event,
-       todo.title AS title,
+       todo.title AS title
     FROM event
     INNER JOIN progress_event ON progress_event.id = event.id
     INNER JOIN progress_todo ON progress_event.id = progress_todo.progress_event_id
