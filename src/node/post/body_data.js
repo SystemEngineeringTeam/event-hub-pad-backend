@@ -20,7 +20,7 @@ exports.event_registration = async function (req,userid,res) {
         console.log(result);
     }
     );
-    res.json(event_post);
+    res.json("message","OK");
 
 
 
