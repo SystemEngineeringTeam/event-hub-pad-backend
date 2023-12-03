@@ -4,7 +4,7 @@ use  eventhub_db;
 CREATE TABLE `event` (
   `id` int NOT NULL AUTO_INCREMENT,
   `user_id` binary(16) DEFAULT NULL,
-  `title` varchar(50) DEFAULT NULL,
+  `title` varchar(500) DEFAULT NULL,
   `description` varchar(2000) DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `event_date` date NOT NULL,
@@ -22,7 +22,7 @@ CREATE TABLE `event` (
 );
 CREATE TABLE `tag` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `word` varchar(20) NOT NULL,
+  `word` varchar(1000) NOT NULL,
   PRIMARY KEY (`id`)
 );
 CREATE TABLE `star` (
@@ -33,13 +33,13 @@ CREATE TABLE `star` (
 );
 CREATE TABLE `user` (
   `id` binary(16) NOT NULL ,
-  `name` varchar(255) NOT NULL,
+  `name` varchar(1000) NOT NULL,
   PRIMARY KEY (`id`)
 );
 
 CREATE TABLE `todo` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `title` varchar(255) NOT NULL,
+  `title` varchar(1000) NOT NULL,
   `deadline` date NOT NULL,
   PRIMARY KEY (`id`)
 );
@@ -51,8 +51,8 @@ CREATE TABLE `event_todo_relation` (
 );
 CREATE TABLE `tool` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `name` varchar(20) NOT NULL,
-  `qua` int NOT NULL,
+  `name` varchar(1000) NOT NULL,
+  `qua` varchar(1000) NOT NULL,
   PRIMARY KEY (`id`)
 );
 CREATE TABLE `event_tool_relation` (
@@ -121,7 +121,7 @@ INSERT INTO `tag` (`word`) VALUES
 -- Insert test data for 'event' table
 INSERT INTO `event` (`user_id`, `title`, `description`, `event_date`, `people`,`price`, `spend_time`, `others`) VALUES
   ((SELECT id FROM user WHERE name = '佐藤 さとる'), 'ダウト大富豪', '大富豪とダウトを組み合わせたトランプゲームです。少人数でも楽しめるように大富豪を改変しました。', '2005-01-05', 3, 200, 10, '人数によってルールを少し変えた。'),
-  ((SELECT id FROM user WHERE name = '佐藤 さとる'), 'BBQ', '新入生と現部員の交流を目的として、大学内のテラスでBBQを行いました。', '2023-02-012', 40, 100000, 300, '片付けが大変だったので、時間を多めに取る必要がありそうです。'),
+  ((SELECT id FROM user WHERE name = '佐藤 さとる'), 'BBQ', '新入生と現部員の交流を目的として、大学内のテラスでBBQを行いました。', '2023-02-12', 40, 100000, 300, '片付けが大変だったので、時間を多めに取る必要がありそうです。'),
   ((SELECT id FROM user WHERE name = '水谷 祐生'), '模擬店', '大学祭で模擬店を出店しました。唐揚げやたこ焼きを中心とした揚げ物に加えて、飲み物を販売しました。', '2023-03-01', 12, 150000, 6000, '韓国のサイダーがよく売れました。'),
   ((SELECT id FROM user WHERE name = '水谷 祐生'), '新入生歓迎会', 'サークル勧誘を目的としたボーリング大会を行いました。', '2023-05-030', 32, 20000, 120,'ゲームごとに順番にメンバーを入れ替えました'),
   ((SELECT id FROM user WHERE name = '山田 邪馬'), '大学祭打ち上げ', ' 大学祭後に大学祭の模擬店でスタッフとして働いてくれた部員の子たちと焼肉を食べに行きました。', '2023-05-01', 40, 50000, 360, '名札を配ったのが良かったと思います。'),
@@ -217,12 +217,12 @@ INSERT INTO `event_todo_relation` (`event_id`, `todo_id`) VALUES
 
 -- Insert test data for 'tool' table
 INSERT INTO `tool` (`name`, `qua`) VALUES
-  ('トランプ', 7),
-  ('机', 7),
-  ('椅子', 21),
-  ('飲み物', 21),
-  ('お菓子', 14),
-  ('ルール確認表', 7);
+  ('トランプ', '180'),
+  ('机', '7'),
+  ('椅子', '21'),
+  ('飲み物', '21'),
+  ('お菓子', '14'),
+  ('ルール確認表', '7');
 
 -- Insert test data for 'event_tool_relation' table
 INSERT INTO `event_tool_relation` (`event_id`, `tool_id`) VALUES
