@@ -18,15 +18,15 @@ exports.top_event = async function (num, res) {
   }
   );
 
-  let top_event = [];
-  let other_events = [];
+  let popularEvents = [];
+  let otherEvents = [];
   let i = 0;
  
   event.forEach((element) => {
     if (i < num) {
-      top_event.push(element);
+      popularEvents.push(element);
     } else {
-      other_events.push(element);
+      otherEvents.push(element);
     }
     i++;
   });
@@ -35,7 +35,7 @@ exports.top_event = async function (num, res) {
 
 
 
-  let event_json = {top_event, other_events};
+  let event_json = {popularEvents, otherEvents};
 
   console.log(event_json);
 

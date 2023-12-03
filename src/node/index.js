@@ -36,6 +36,7 @@ app.get('/api/:userid/todos/all', (req, res) => {
     make_json.todo_list(user_id, res);
 });
 
+// 常にたたかれるtodo
 app.get('/api/:userid/todos', (req, res) => {
     let user_id = req.params.userid;
     let num = Number(req.query.num);

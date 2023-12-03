@@ -13,7 +13,7 @@ exports.star_num_top = async function (num) {
     event.description,
     event.price,
     event.people,
-    event.spend_time,
+    event.spend_time AS spentTime,
     IFNULL (tmp_star.count, 0) AS star,
     tmp_tag.tags
 FROM
@@ -31,7 +31,7 @@ FROM
         SELECT
             et.event_id AS event_id,
             JSON_ARRAYAGG(
-                JSON_OBJECT('id', t.id, 'word', t.word)
+                JSON_OBJECT('id', t.id, 'name', t.word)
             ) AS tags
         FROM
             event_tag et
@@ -160,9 +160,9 @@ exports.individual_todo_list = async function (userid, num) {
     const results = await query(
       `
       SELECT
-      event.id,
-        event.title,
-       todo.title
+      event.id AS id,
+      event.title AS event,
+       todo.title AS title,
     FROM event
     INNER JOIN progress_event ON progress_event.id = event.id
     INNER JOIN progress_todo ON progress_event.id = progress_todo.progress_event_id

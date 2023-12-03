@@ -213,7 +213,17 @@ INSERT INTO `event_todo_relation` (`event_id`, `todo_id`) VALUES
   (4, 12),
   (4, 13),
   (4, 14),
-  (4, 15);
+  (4, 15),
+  (5,4),
+  (5,5),
+  (5,6),
+  (5,7),
+  (6,16),
+  (6,17),
+  (6,18),
+  (7,1),
+  (7,2),
+  (7,3);
 
 -- Insert test data for 'tool' table
 INSERT INTO `tool` (`name`, `qua`) VALUES
@@ -238,7 +248,10 @@ INSERT INTO `progress_event` (`user_id`, `event_id`) VALUES
   ((SELECT id FROM user WHERE name = '水谷 祐生'), 1),
   ((SELECT id FROM user WHERE name = '水谷 祐生'), 2),
   ((SELECT id FROM user WHERE name = '水谷 祐生'), 3),
-  ((SELECT id FROM user WHERE name = '水谷 祐生'), 4);
+  ((SELECT id FROM user WHERE name = '水谷 祐生'), 4),
+  ((SELECT id FROM user WHERE name = '水谷 祐生'), 5),
+  ((SELECT id FROM user WHERE name = '水谷 祐生'), 6),
+  ((SELECT id FROM user WHERE name = '水谷 祐生'), 7);
 
 -- Insert test data for 'progress_todo' table
 INSERT INTO `progress_todo` (`progress_event_id`, `todo_id`, `bool`) VALUES
@@ -253,7 +266,7 @@ INSERT INTO `progress_todo` (`progress_event_id`, `todo_id`, `bool`) VALUES
   (3, 9, 0),
   (3, 10, 0),
   (3, 11, 0),
-  (4, 12, 0),
+  (4, 1, 0),
   (4, 13, 0),
   (4, 14, 0),
   (4, 15, 0);
