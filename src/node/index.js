@@ -24,7 +24,7 @@ app.get('/api/events', (req, res) => {
     make_json.top_event(num, res);
 
 });
-app.get('/api/events/:eventid', (req, res) => {
+app.get('/api/events/detail/:eventid', (req, res) => {
     let event_id = Number(req.params.eventid);
     console.log(event_id);
     make_json.event_detail( event_id, res);
