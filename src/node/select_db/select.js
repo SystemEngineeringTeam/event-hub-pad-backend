@@ -3,6 +3,7 @@ const util = require("util");
 
 const query = util.promisify(db.query).bind(db); // bind(db) を追加
 
+
 // event_idからeventの情報を取得できる（reqはevent_id）)
 exports.star_num_top = async function (num) {
   try {
@@ -94,13 +95,13 @@ exports.event_detail = async function (eventid) {
             event.title,
             event.description,
             event.price,
-            event.,
+            event.others,
             event.people,
             event.spend_time,
             event.created_at,
             event.event_date,
             JSON_ARRAYAGG(JSON_OBJECT('id', todo.id, 'title', todo.title)) AS todos,
-            JSON_ARRAYAGG(JSON_OBJECT('name', tool.name, 'amount', tool.qua)) AS tools
+            JSON_ARRAYAGG(JSON_OBJECT('name', tool.name, 'amount', tool.qua)) AS prepares
           FROM
             event
           INNER JOIN

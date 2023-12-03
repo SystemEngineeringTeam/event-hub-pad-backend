@@ -65,6 +65,18 @@ app.post('/api/:userid/star/:eventid', (req, res) => {
 
 });
 
+app.post('/api/user/:userid', (req, res) => {
+    let user_id = req.params.userid;
+    console.log(user_id);
+
+
+    console.log("body");
+    console.log(req.body.name);
+
+    post.user_id(req,user_id,res);
+
+});
+
 app.delete('/api/:userid/star/:eventid', (req, res) => {
     let user_id = req.params.userid;
     console.log(user_id);

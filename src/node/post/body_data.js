@@ -1,5 +1,16 @@
 const insert = require('./insert');
 
+
+exports.user_id = async function (req,userid,res) {
+    let user_id = userid;
+    console.log(user_id);
+    console.log(req.body.name);
+
+    let user = insert.user_id(req,user_id,res);
+
+    res.json(user);
+}
+
 exports.event_registration = async function (req,userid,res) {
    
 

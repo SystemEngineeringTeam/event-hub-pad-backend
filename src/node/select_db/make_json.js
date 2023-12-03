@@ -45,8 +45,6 @@ exports.top_event = async function (num, res) {
 // イベントの詳細を取得できる
 exports.event_detail = async function (eventid, res) {
   let event_detail = await select.event_detail(eventid);
-
-t= formatDate(event_detail[0].created_at);
   // event_detail[0].event_date= formatDate(event_detail[0].event_date);
 
   console.log(event_detail[0].todos);
@@ -56,7 +54,7 @@ t= formatDate(event_detail[0].created_at);
   event_detail[0].tools = JSON.parse(event_detail[0].tools);
 
   let datelist = event_detail[0];
-
+  console.log("datelist");
   console.log(datelist);
   res.json(datelist);
 };
@@ -82,3 +80,5 @@ exports.individual_todo_list = async function (userid, num, res) {
   console.log(todoall);
   res.json(todoall);
 };
+
+

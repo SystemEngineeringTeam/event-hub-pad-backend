@@ -3,6 +3,23 @@ const util = require('util');
 
 const query = util.promisify(db.query).bind(db); // bind(db) を追加
 
+exports.user_id = async function (req,userid,res) {
+    let name = req.body.name;
+        let user_id = userid;
+        console.log(user_id);
+        console.log(name);
+
+    try {
+       
+        let results = await query(`
+        INSERT INTO user (id,name)
+        VALUES (UUID_TO_BIN(?),?);`, [user_id,name]);
+    
+        return results;
+    } catch (err) {
+        return err;
+    }
+}
 
 exports.event_registration = async function (req,userid,res) {
 

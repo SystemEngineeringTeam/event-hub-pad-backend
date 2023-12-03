@@ -241,7 +241,15 @@ INSERT INTO `event_tool_relation` (`event_id`, `tool_id`) VALUES
   (1, 3),
   (1, 4),
   (1, 5),
-  (1, 6);
+  (1, 6),
+  (2,4),
+  (5,1),
+  (8,1),
+  (4,7),
+  (4,6),
+  (4,5),
+  (4,4),
+  (4,3);
 
 -- Insert test data for 'progress_event' table
 INSERT INTO `progress_event` (`user_id`, `event_id`) VALUES
